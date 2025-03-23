@@ -1,0 +1,20 @@
+Consultas de SQL:
+
+1.
+SELECT 
+    c.commerce_id,
+    c.commerce_name,
+    SUM(CASE WHEN a.ask_status = 'Successful' THEN 1 ELSE 0 END) AS total_exitosas,
+    SUM(CASE WHEN a.ask_status = 'Unsuccessful' THEN 1 ELSE 0 END) AS total_no_exitosas
+FROM apicall a
+JOIN commerce c ON a.commerce_id = c.commerce_id
+WHERE c.commerce_status = 'Active' AND strftime('%Y-%m', a.date_api_call) IN ('2024-07', '2024-08')
+GROUP BY c.commerce_id, c.commerce_name;
+
+2.
+SELECT 
+    commerce_id,
+    commerce_email,
+    commerce_nit
+FROM commerce
+WHERE commerce_status = 'Active';
